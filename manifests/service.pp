@@ -1,0 +1,3 @@
+class freeradius::service {
+
+}
