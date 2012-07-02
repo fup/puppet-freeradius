@@ -1,0 +1,49 @@
+# THIS FILE IS MANAGED BY PUPPET #
+sql {
+  database = "<%= @type %>"
+  driver = "rlm_sql_${database}"
+  server = "<%= @server %>"
+<%- if @port %>
+  port = <%= @port %>
+<%- end %>
+  login = "<%= @login %>"
+  password = "<%= @password %>"
+  radius_db = "<%= @radius_db %>"
+
+  acct_table1 = "<%= @acct_table1 %>"
+  acct_table2 = "<%= @acct_table2 %>"
+
+  postauth_table = "<%= @postauth_table %>"
+
+  authcheck_table = "<%= @authcheck_table %>"
+  authreply_table = "<%= @authreply_table %>"
+
+  groupcheck_table = "<%= @groupcheck_table %>"
+  groupreply_table = "<%= @groupreply_table %>"
+
+  usergroup_table = "<%= @usergroup_table %>"
+
+<%- if @read_groups %>
+  read_groups = <%= @read_groups %>
+<%- end %>
+
+  deletestalesessions = <%= @deletestalesessions %>
+
+  sqltrace = <%= @sqltrace %>
+  sqltracefile = <%= @sqltracefile %>
+
+  num_sql_socks = <%= @num_sql_socks %>
+
+  connect_failure_retry_delay = <%= @connect_failure_retry_delay %>
+
+  lifetime = <%= @lifetime %>
+
+  max_queries = <%= @max_queries %>
+
+<%- if @readclients %>
+  readclients = <%= @readclients %>
+<%- end %>
+  nas_table = "<%= @nas_table %>"
+
+  $INCLUDE sql/${database}/dialup.conf
+}

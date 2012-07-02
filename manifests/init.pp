@@ -1,4 +1,6 @@
-class freeradius inherits freeradius::params {
+class freeradius(
+
+) inherits freeradius::params {
   include stdlib
 
   anchor { 'freeradius::begin': }

@@ -1,0 +1,89 @@
+#  listen: Make the server listen on a particular IP address, and send
+#  replies out from that address. This directive is most useful for
+#  hosts with multiple IP addresses on one interface.
+#
+#  If you want the server to listen on additional addresses, or on
+#  additionnal ports, you can use multiple "listen" sections.
+#
+#  Each section make the server listen for only one type of packet,
+#  therefore authentication and accounting have to be configured in
+#  different sections.
+#
+#  The server ignore all "listen" section if you are using '-i' and '-p'
+#  on the command line.
+#
+listen {
+  #  Type of packets to listen for.
+  #  Allowed values are:
+  # auth  listen for authentication packets
+  # acct  listen for accounting packets
+  # proxy   IP to use for sending proxied packets
+  # detail  Read from the detail file.  For examples, see
+  #               raddb/sites-available/copy-acct-to-home-server
+  # status  listen for Status-Server packets.  For examples,
+  #   see raddb/sites-available/status
+  # coa     listen for CoA-Request and Disconnect-Request
+  #   packets.  For examples, see the file
+  #   raddb/sites-available/coa-server
+  #
+  type = <%= @type %>
+
+  #  Note: "type = proxy" lets you control the source IP used for
+  #        proxying packets, with some limitations:
+  #
+  #    * A proxy listener CANNOT be used in a virtual server section.
+  #    * You should probably set "port = 0".
+  #    * Any "clients" configuration will be ignored.
+  #
+  #  See also proxy.conf, and the "src_ipaddr" configuration entry
+  #  in the sample "home_server" section.  When you specify the
+  #  source IP address for packets sent to a home server, the
+  #  proxy listeners are automatically created.
+
+  #  IP address on which to listen.
+  #  Allowed values are:
+  # dotted quad (1.2.3.4)
+  #       hostname    (radius.example.com)
+  #       wildcard    (*)
+  ipaddr = <%= @listen_ip %>
+
+<%- if @listen_ipv6 %>
+  #  OR, you can use an IPv6 address, but not both
+  #  at the same time.
+  ipv6addr = <%= @listen_ipv6 %> # any.  ::1 == localhost
+<%- end %>
+  #  Port on which to listen.
+  #  Allowed values are:
+  # integer port number (1812)
+  # 0 means "use /etc/services for the proper port"
+  port = <%= @port %>
+
+<%- if @interface %>
+  #  Some systems support binding to an interface, in addition
+  #  to the IP address.  This feature isn't strictly necessary,
+  #  but for sites with many IP addresses on one interface,
+  #  it's useful to say "listen on all addresses for eth0".
+  #
+  #  If your system does not support this feature, you will
+  #  get an error if you try to use it.
+  #
+  interface = <%= @enterface %>
+<%- end %>
+<%- if @clients %>
+  #  Per-socket lists of clients.  This is a very useful feature.
+  #
+  #  The name here is a reference to a section elsewhere in
+  #  radiusd.conf, or clients.conf.  Having the name as
+  #  a reference allows multiple sockets to use the same
+  #  set of clients.
+  #
+  #  If this configuration is used, then the global list of clients
+  #  is IGNORED for this "listen" section.  Take care configuring
+  #  this feature, to ensure you don't accidentally disable a
+  #  client you need.
+  #
+  #  See clients.conf for the configuration of "per_socket_clients".
+  #
+  clients = <%= @clients %>
+<%- end %>
+}
