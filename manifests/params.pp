@@ -25,15 +25,17 @@ class freeradius::params {
   case $::operatingsystem {
     debian: {
       $radius         = {
-        uid            => 'freerad',
-        gid            => 'freerad',
-        base_dir       => '/etc/freeradius',
-        listen_dir     => "/etc/freeradius/listen",
-        vhost_dir      => '/etc/freeradius/sites-enabled',
-        client_dir     => '/etc/freeradius/clients',
-        packages       => ['freeradius'],
-        mysql_packages => ['freeradius-mysql'],
-        service_name   => 'freeradius'
+        uid              => 'freerad',
+        gid              => 'freerad',
+        base_dir         => '/etc/freeradius',
+        listen_dir       => "/etc/freeradius/listen",
+        vhost_dir        => '/etc/freeradius/sites-enabled',
+        client_dir       => '/etc/freeradius/clients',
+        radiusclient_dir => '/etc/radiusclient',
+        packages         => ['freeradius'],
+        client_packages  => ['libradius1'],
+        mysql_packages   => ['freeradius-mysql'],
+        service_name     => 'freeradius'
       }
     }
   }
