@@ -1,0 +1,70 @@
+client <%= @name %> {
+<% if @ipaddr -%>
+  ipaddr = <%= @ipaddr %>
+<% end -%>
+
+<% if @ipv6addr -%>
+  ipv6addr = <%= @ipv6addr %>
+<% end -%>
+
+<% if @netmask -%>
+  netmask = <%= @netmask %>
+<% end -%>
+
+  secret = <%= @secret %>
+<% if @login %>  login = <%= @login %><% end %>
+<% if @password %>  password = <%= @password %><% end %>
+  #  Old-style clients do not send a Message-Authenticator
+  #  in an Access-Request.  RFC 5080 suggests that all clients
+  #  SHOULD include it in an Access-Request.  The configuration
+  #  item below allows the server to require it.  If a client
+  #  is required to include a Message-Authenticator and it does
+  #  not, then the packet will be silently discarded.
+  #
+  #  allowed values: yes, no
+  require_message_authenticator = <%= @require_message_authenticator %>
+
+
+  #
+  # the following three fields are optional, but may be used by
+  # checkrad.pl for simultaneous use checks
+  #
+
+  #
+  # The nastype tells 'checkrad.pl' which NAS-specific method to
+  #  use to query the NAS for simultaneous use.
+  #
+  #  Permitted NAS types are:
+  #
+  # cisco
+  # computone
+  # livingston
+  # max40xx
+  # multitech
+  # netserver
+  # pathras
+  # patton
+  # portslave
+  # tc
+  # usrhiper
+  # other # for all other types
+  nastype = <%= @nastype %>
+
+<% if @virtual_server %>
+  #
+  #  As of 2.0, clients can also be tied to a virtual server.
+  #  This is done by setting the "virtual_server" configuration
+  #  item, as in the example below.
+  #
+  virtual_server = <%= @virtual_server %>
+<% end -%>
+
+<% if @coa_server %>
+  #
+  #  A pointer to the "home_server_pool" OR a "home_server"
+  #  section that contains the CoA configuration for this
+  #  client.  For an example of a coa home server or pool,
+  #  see raddb/sites-available/originate-coa
+  coa_server = <%= @coa_server %>
+<% end -%>
+}

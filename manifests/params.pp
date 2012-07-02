@@ -30,6 +30,7 @@ class freeradius::params {
         base_dir       => '/etc/freeradius',
         listen_dir     => "/etc/freeradius/listen",
         vhost_dir      => '/etc/freeradius/sites-enabled',
+        client_dir     => '/etc/freeradius/clients',
         packages       => ['freeradius'],
         mysql_packages => ['freeradius-mysql'],
         service_name   => 'freeradius'
@@ -45,6 +46,13 @@ class freeradius::params {
     port        => '0',
     interface   => undef,
     clients     => undef
+  }
+
+  # Default settings for freeradius::client
+  $client = {
+    netmask                       => '32',
+    nastype                       => 'other',
+    require_message_authenticator => 'no',
   }
 
   # Default settings for freeraidus::vhost
