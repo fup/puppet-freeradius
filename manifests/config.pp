@@ -1,4 +1,6 @@
 class freeradius::config inherits freeradius::params {
+  $osfamily_lower = inline_template("<%= @osfamily.downcase %>")
+
   File {
     owner => 'root',
     group => $freeradius::params::radius['gid'],
@@ -7,7 +9,7 @@ class freeradius::config inherits freeradius::params {
 
   file { "${freeradius::params::radius['base_dir']}/radiusd.conf":
     ensure  => file,
-    content => template("freeradius/${::osfamily}/radiusd.conf.erb"),
+    content => template("freeradius/${osfamily_lower}/radiusd.conf.erb"),
   }
   file { $freeradius::params::radius['listen_dir']:
     ensure  => directory,
