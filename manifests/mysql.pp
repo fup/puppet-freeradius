@@ -38,8 +38,9 @@ class freeradius::mysql (
     group   => $freeradius::params::radius['gid'],
     mode    => '0640',
     content => template('freeradius/common/sql.conf.erb'),
-  } -> # file before support file
+  } -> # file before support file, in freeradius::config
+       # Anchor to the virtual file in freeradius::config for
+       # proper ordering.
     File <| tag == 'freeradius_module_sql' |> {
-      before => Class['freeradius::config'],
   }
 }
