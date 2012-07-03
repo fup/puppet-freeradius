@@ -31,16 +31,15 @@ class freeradius::mysql (
   package { 'freeradius-mysql-support':
     ensure  => $ensure,
     name    => $package_name,
-    require => Class['freeradius'],
-  }
-
+  } ->  #package before file
   file { "${freeradius::params::radius['base_dir']}/sql.conf":
     ensure  => file,
     owner   => 'root',
     group   => $freeradius::params::radius['gid'],
     mode    => '0640',
     content => template('freeradius/common/sql.conf.erb'),
+  } -> # file before support file
+    File <| tag == 'freeradius_module_sql' |> {
+      before => Class['freeradius::config'],
   }
-  File <| tag == 'freeradius_module_sql' |>
-
 }
