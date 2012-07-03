@@ -34,7 +34,7 @@ class freeradius::mysql (
     require => Class['freeradius'],
   }
 
-  file { "${base_dir}/sql.conf":
+  file { "${freeradius::params::radius['base_dir']}/sql.conf":
     ensure  => file,
     owner   => 'root',
     group   => $freeradius::params::radius['gid'],
