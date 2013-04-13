@@ -445,8 +445,10 @@ security {
 #
 #  allowed values: {no, yes}
 #
-proxy_requests  = yes
+proxy_requests  = <%= @proxy_requests %>
+<%- if @proxy_requests == "yes" %>
 $INCLUDE proxy.conf
+<%- end %>
 
 
 # CLIENTS CONFIGURATION

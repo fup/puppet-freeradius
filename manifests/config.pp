@@ -1,5 +1,11 @@
-class freeradius::config inherits freeradius::params {
+class freeradius::config (
+  $proxy = true
+) inherits freeradius::params {
   $osfamily_lower = inline_template("<%= @osfamily.downcase %>")
+  $proxy_requests = $proxy ? {
+    false   => 'no',
+    default => 'yes'
+  }
 
   File {
     owner => 'root',

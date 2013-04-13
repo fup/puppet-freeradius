@@ -1,6 +1,7 @@
 class freeradius(
   $server = false,
-  $client = true
+  $client = true,
+  $proxy  = true
 ) inherits freeradius::params {
   include stdlib
 
@@ -15,6 +16,7 @@ class freeradius(
   if $server == true {
     class { 'freeradius::config':
       require => Class['freeradius::package'],
+      proxy   => $proxy
     }
     ~> class { 'freeradius::service':
       before => Anchor['freeradius::end'],
