@@ -1,0 +1,46 @@
+class freeradius::ldap (
+  $server,
+  $basedn,
+  $filter                     = '(uid=%{%{Stripped-User-Name}:-%{User-Name}})',
+  $base_filter                = undef,
+  $identity                   = undef,
+  $password                   = undef,
+  $ldap_connections_number    = '5',
+  $max_uses                   = '0',
+  $port                       = '389',
+  $timeout                    = '4',
+  $timelimit                  = '3',
+  $net_timeout                = '1',
+  $tls_start_tls              = 'no',
+  $tls_cacertfile             = undef,
+  $tls_cacertdir              = undef,
+  $tls_certfile               = undef,
+  $tls_keyfile                = undef,
+  $tls_randfile               = undef,
+  $tls_require_cert           = undef,
+  $default_profile            = undef,
+  $profile_attribute          = undef,
+  $access_attr                = undef,
+  $dictionary_mapping         = '${confdir}/ldap.attrmap',
+  $password_attribute         = undef,
+  $edir_account_policy_check  = 'no',
+  $groupname_attribute        = undef,
+  $groupmembership_filter     = undef,
+  $groupmembership_attribute  = undef,
+  $compare_check_items        = undef,
+  $do_xlat                    = undef,
+  $access_attr_used_for_allow = undef,
+  $chase_referrals            = undef,
+  $rebind                     = undef,
+  $set_auth_type              = undef,
+  $ldap_debug                 = undef,
+  $keepalive_idle             = '60',
+  $keepalive_probes           = '3',
+  $keepalive_interval         = '3'
+) inherits freeradius::params {
+  
+  file { "${freeradius::params::radius['base_dir']}/modules/ldap":
+    ensure  => file,
+    content => template('freeradius/common/ldap.conf.erb')
+  }
+}
