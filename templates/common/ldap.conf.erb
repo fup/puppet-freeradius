@@ -98,7 +98,7 @@ ldap {
 		<%- if @tls_cacertfile %>
 		cacertfile	= <%= @tls_cacertfile %>
 		<%- end %>
-		<%- @tls_cacertdir %>
+		<%- if @tls_cacertdir %>
 		cacertdir		= <%= tls_cacertdir %>
 		<%- end %>
 		<%- if @tls_certfile %>
@@ -171,7 +171,7 @@ ldap {
 	<%- if @groupname_attribute %>
 	# groupname_attribute = cn
 	groupname_attribute = <%= @groupname_attribute %>
-	<% -end %>
+	<%- end %>
 	<%- if @groupmembership_filter %>
 	# groupmembership_filter = "(|(&(objectClass=GroupOfNames)(member=%{control:Ldap-UserDn}))(&(objectClass=GroupOfUniqueNames)(uniquemember=%{control:Ldap-UserDn})))"
 	groupmembership_filter = "<%= @groupmembership_filter %>"
@@ -189,7 +189,7 @@ ldap {
 	# do_xlat = yes
 	do_xlat = <%= @do_xlat %>
 	<%- end %>
-	<%- @access_attr_used_for_allow %>
+	<%- if @access_attr_used_for_allow %>
 	# access_attr_used_for_allow = yes
 	access_attr_used_for_allow = <%= access_attr_used_for_allow %>
 	<%- end %>
