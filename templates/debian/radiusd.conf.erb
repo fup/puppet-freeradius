@@ -164,8 +164,8 @@ pidfile = ${run_dir}/${name}.pid
 #  It will join all groups where "user" is a member.  This can allow
 #  for some finer-grained access controls.
 #
-user = freerad
-group = freerad
+user = <%= scope.lookupvar('freeradius::params::radius')['uid'] %>
+group = <%= scope.lookupvar('freeradius::params::radius')['gid'] %>
 
 #  max_request_time: The maximum time (in seconds) to handle a request.
 #
