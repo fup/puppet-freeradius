@@ -130,11 +130,11 @@ ldap {
 	<%- end %>
 	<%- if @profile_attribute %>
 	# profile_attribute = "radiusProfileDn"
-	profile_attribute = "<%= profile_attribute %>"
+	profile_attribute = "<%= @profile_attribute %>"
 	<%- end %>
 	<%- if @access_attr %>
 	# access_attr = "dialupAccess"
-	access_attr = "<%= access_attr %>"
+	access_attr = "<%= @access_attr %>"
 	<%- end %>
 
 	# Mapping of RADIUS dictionary attributes to LDAP
@@ -191,7 +191,7 @@ ldap {
 	<%- end %>
 	<%- if @access_attr_used_for_allow %>
 	# access_attr_used_for_allow = yes
-	access_attr_used_for_allow = <%= access_attr_used_for_allow %>
+	access_attr_used_for_allow = <%= @access_attr_used_for_allow %>
 	<%- end %>
 
 	#
